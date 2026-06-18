@@ -822,14 +822,16 @@
       font-family: "Cormorant Garamond", serif;
       font-size: 18px; color: var(--mist); margin-top: 4px;
     }
-    .drawer-close {
+    .drawer-controls { display: flex; align-items: center; gap: 8px; }
+    .drawer-nav-btn, .drawer-close {
       background: none; border: 1px solid rgba(240,235,225,.12);
       border-radius: 1px; color: rgba(240,235,225,.4);
-      font-size: 18px; width: 36px; height: 36px;
+      font-size: 16px; width: 36px; height: 36px;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: border-color .2s, color .2s; flex-shrink: 0;
     }
-    .drawer-close:hover { border-color: var(--gold); color: var(--gold); }
+    .drawer-nav-btn:hover, .drawer-close:hover { border-color: var(--gold); color: var(--gold); }
+    .drawer-close { font-size: 18px; }
 
     .drawer-body { flex: 1; overflow: hidden; position: relative; }
     .drawer-body iframe {
@@ -1221,7 +1223,11 @@
         <div class="drawer-meta" id="drawerMeta"></div>
         <div class="drawer-title" id="drawerTitle"></div>
       </div>
-      <button class="drawer-close" onclick="closeDrawer()" aria-label="Đóng">✕</button>
+      <div class="drawer-controls">
+        <button class="drawer-nav-btn" onclick="navigateSlide('prev')" title="Slide trước">←</button>
+        <button class="drawer-nav-btn" onclick="navigateSlide('next')" title="Slide tiếp">→</button>
+        <button class="drawer-close" onclick="closeDrawer()" aria-label="Đóng">✕</button>
+      </div>
     </div>
     <div class="drawer-body">
       <iframe id="drawerIframe" src="" allow="fullscreen" allowfullscreen title="Project slides"></iframe>
@@ -1459,6 +1465,28 @@
       document.body.style.overflow = '';
       setTimeout(() => { document.getElementById('drawerIframe').src = ''; }, 500);
     }
+
+    // ── DRAWER NAVIGATION ────────────────────────────
+    function navigateSlide(dir) {
+      const iframe = document.getElementById('drawerIframe');
+      if (!iframe.src) return;
+      const msgs = dir === 'next'
+        ? [{ action: 'goToNextPage' }, { type: 'canva:next' }, 'NEXT']
+        : [{ action: 'goToPreviousPage' }, { type: 'canva:prev' }, 'PREV'];
+      msgs.forEach(m => iframe.contentWindow?.postMessage(m, '*'));
+    }
+
+    // Scroll chuột trên drawer → chuyển slide
+    document.getElementById('slideDrawer').addEventListener('wheel', (e) => {
+      if (!document.getElementById('slideDrawer').classList.contains('open')) return;
+      e.preventDefault();
+      navigateSlide(e.deltaY > 0 || e.deltaX > 0 ? 'next' : 'prev');
+    }, { passive: false });
+
+    // Hover vào iframe → auto focus (không cần click trước)
+    document.getElementById('drawerIframe').addEventListener('mouseenter', () => {
+      document.getElementById('drawerIframe').focus();
+    });
 
     document.querySelectorAll('.p-card.academic').forEach(card => {
       card.addEventListener('click', () => openDrawer(card.dataset.project));
