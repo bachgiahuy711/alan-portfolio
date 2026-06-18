@@ -788,6 +788,95 @@
       .about-headline { font-size: 28px; }
       .contact-display { font-size: 40px; }
     }
+    /* ── SLIDE DRAWER ─────────────────────────────── */
+    .drawer-backdrop {
+      position: fixed; inset: 0; z-index: 490;
+      background: rgba(14,17,23,.72);
+      opacity: 0; pointer-events: none;
+      transition: opacity .4s ease;
+    }
+    .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+
+    .slide-drawer {
+      position: fixed; top: 0; right: 0; z-index: 495;
+      width: 65%; height: 100%;
+      background: var(--dark2);
+      box-shadow: -12px 0 56px rgba(0,0,0,.55);
+      transform: translateX(100%);
+      transition: transform .48s cubic-bezier(.22,1,.36,1);
+      display: flex; flex-direction: column;
+    }
+    .slide-drawer.open { transform: translateX(0); }
+
+    .drawer-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 32px;
+      border-bottom: 1px solid rgba(240,235,225,.07);
+      flex-shrink: 0;
+    }
+    .drawer-meta {
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--gold); opacity: .6;
+    }
+    .drawer-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 18px; color: var(--mist); margin-top: 4px;
+    }
+    .drawer-close {
+      background: none; border: 1px solid rgba(240,235,225,.12);
+      border-radius: 1px; color: rgba(240,235,225,.4);
+      font-size: 18px; width: 36px; height: 36px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s, color .2s; flex-shrink: 0;
+    }
+    .drawer-close:hover { border-color: var(--gold); color: var(--gold); }
+
+    .drawer-body { flex: 1; overflow: hidden; position: relative; }
+    .drawer-body iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; border: none;
+    }
+    .drawer-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: rgba(240,235,225,.22);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 18px; font-style: italic;
+      text-align: center; gap: 12px;
+    }
+    .drawer-placeholder strong {
+      display: block; font-size: 9.5px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); opacity: .4; font-style: normal;
+    }
+
+    /* Academic section */
+    .academic-sep {
+      display: flex; align-items: center; gap: 16px;
+      padding: 40px 0 20px;
+      font-size: 9px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--moss);
+    }
+    .academic-sep::after {
+      content: ""; flex: 1; height: 1px;
+      background: rgba(14,17,23,.1);
+    }
+    .p-card.academic { cursor: pointer; }
+    .p-slides-cue {
+      position: absolute; bottom: 28px; right: 28px;
+      font-size: 8px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--moss); opacity: .45;
+      transition: opacity .2s;
+    }
+    .p-card.academic:hover .p-slides-cue { opacity: 1; }
+
+    @media (max-width: 960px) {
+      .slide-drawer { width: 85%; }
+    }
+    @media (max-width: 600px) {
+      .slide-drawer { width: 100%; }
+      .drawer-head { padding: 18px 20px; }
+    }
   </style>
 </head>
 <body>
@@ -954,7 +1043,7 @@
           <div class="sec-tag" style="color:var(--moss);"><div class="sec-tag-line" style="background:var(--moss);"></div>Dự án</div>
           <div class="port-display">PORTFOLIO<span class="dot">.</span></div>
         </div>
-        <div class="port-count">06 dự án &amp; kinh nghiệm</div>
+        <div class="port-count">09 dự án &amp; kinh nghiệm</div>
       </div>
       <div class="proj-grid">
         <a class="p-card feat fi-scale" href="#portfolio">
@@ -999,6 +1088,32 @@
           <div class="p-desc">Team Leader. Chiến lược đa kênh: Meta, TikTok, Website, ZaloOA.</div>
           <div class="p-arrow">↗</div>
         </a>
+      </div>
+
+      <!-- ACADEMIC PROJECTS -->
+      <div class="academic-sep fi">Học thuật</div>
+      <div class="proj-grid fi-scale" style="grid-template-columns:1fr 1fr 1fr;">
+        <div class="p-card academic" role="button" tabindex="0" data-project="haidilao">
+          <div class="p-no">No. 07</div>
+          <div class="p-type">Digital Marketing · Academic</div>
+          <div class="p-title">Haidilao<br>Kế hoạch Digital</div>
+          <div class="p-desc">Xây dựng kế hoạch digital marketing toàn diện cho Haidilao. Chiến lược đa kênh, content plan và brand positioning.</div>
+          <div class="p-slides-cue">Xem Slides</div>
+        </div>
+        <div class="p-card academic" role="button" tabindex="0" data-project="pnj">
+          <div class="p-no">No. 08</div>
+          <div class="p-type">IMC Plan · Academic</div>
+          <div class="p-title">PNJ<br>IMC Plan</div>
+          <div class="p-desc">Kế hoạch truyền thông tích hợp (IMC) cho PNJ. Phân tích thị trường, xác định mục tiêu và chiến lược 360°.</div>
+          <div class="p-slides-cue">Xem Slides</div>
+        </div>
+        <div class="p-card academic" role="button" tabindex="0" data-project="zalopay">
+          <div class="p-no">No. 09</div>
+          <div class="p-type">Proposal · Academic</div>
+          <div class="p-title">ZaloPay<br>Proposal</div>
+          <div class="p-desc">Đề xuất chiến dịch marketing cho ZaloPay. Research, insights, creative concept và media planning.</div>
+          <div class="p-slides-cue">Xem Slides</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1111,6 +1226,25 @@
     <div class="f-brand">ALAN</div>
     <div class="f-copy">© 2026 Bạch Gia Huy · Junior Digital Marketing</div>
   </footer>
+
+  <!-- SLIDE DRAWER -->
+  <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer()"></div>
+  <aside class="slide-drawer" id="slideDrawer" aria-modal="true" aria-label="Project slides">
+    <div class="drawer-head">
+      <div>
+        <div class="drawer-meta" id="drawerMeta"></div>
+        <div class="drawer-title" id="drawerTitle"></div>
+      </div>
+      <button class="drawer-close" onclick="closeDrawer()" aria-label="Đóng">✕</button>
+    </div>
+    <div class="drawer-body">
+      <iframe id="drawerIframe" src="" allow="fullscreen" allowfullscreen title="Project slides"></iframe>
+      <div class="drawer-placeholder" id="drawerPlaceholder">
+        Slides đang được cập nhật.<br>
+        <strong>Coming soon</strong>
+      </div>
+    </div>
+  </aside>
 
   <script>
     // ── NAV SCROLL ──────────────────────────────────
@@ -1228,7 +1362,10 @@
 
     // Close on Escape
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && menuOpen) closeMenu();
+      if (e.key === 'Escape') {
+        if (menuOpen) closeMenu();
+        closeDrawer();
+      }
     });
 
     // ── TIMELINE STAGGER ─────────────────────────────
@@ -1274,6 +1411,63 @@
 
     const awardsGrid = document.querySelector('.awards-grid');
     if (awardsGrid) awObserver.observe(awardsGrid);
+
+    // ── SLIDE DRAWER ─────────────────────────────────
+    const projects = {
+      haidilao: {
+        meta: 'Digital Marketing · Academic',
+        title: 'Kế hoạch Digital Marketing · Haidilao',
+        canva: 'https://www.canva.com/design/DAG9AEvEBio/bEwSVr3QydiHTLIwdDjg-w/view?embed'
+      },
+      pnj: {
+        meta: 'IMC Plan · Academic',
+        title: 'IMC Plan · PNJ',
+        canva: 'https://www.canva.com/design/DAGZpzM5hrI/FeNaArmwUchRPwSnvBlq9g/view?embed'
+      },
+      zalopay: {
+        meta: 'Proposal · Academic',
+        title: 'Marketing Proposal · ZaloPay',
+        canva: 'https://www.canva.com/design/DAHImIMQI20/Mkk_qHal60Akp8kGluQDiQ/view?embed'
+      }
+    };
+
+    function openDrawer(key) {
+      const p = projects[key];
+      if (!p) return;
+      document.getElementById('drawerMeta').textContent = p.meta;
+      document.getElementById('drawerTitle').textContent = p.title;
+      const iframe = document.getElementById('drawerIframe');
+      const placeholder = document.getElementById('drawerPlaceholder');
+      if (p.canva) {
+        iframe.src = p.canva;
+        iframe.style.display = 'block';
+        placeholder.style.display = 'none';
+      } else {
+        iframe.src = '';
+        iframe.style.display = 'none';
+        placeholder.style.display = 'flex';
+      }
+      document.getElementById('slideDrawer').classList.add('open');
+      document.getElementById('drawerBackdrop').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      document.getElementById('slideDrawer').classList.remove('open');
+      document.getElementById('drawerBackdrop').classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(() => { document.getElementById('drawerIframe').src = ''; }, 500);
+    }
+
+    document.querySelectorAll('.p-card.academic').forEach(card => {
+      card.addEventListener('click', () => openDrawer(card.dataset.project));
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openDrawer(card.dataset.project);
+        }
+      });
+    });
   </script>
 </body>
 </html>
