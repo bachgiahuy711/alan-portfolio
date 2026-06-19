@@ -788,6 +788,49 @@
       .about-headline { font-size: 28px; }
       .contact-display { font-size: 40px; }
     }
+    /* ── MARQUEE ──────────────────────────────────── */
+    .marquee-wrap {
+      background: var(--dark3);
+      overflow: hidden;
+      border-top: 1px solid rgba(196,144,64,.08);
+      border-bottom: 1px solid rgba(196,144,64,.08);
+    }
+    .marquee-row {
+      display: flex; padding: 11px 0;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(240,235,225,.04);
+    }
+    .marquee-row:last-child { border-bottom: none; }
+    .marquee-track {
+      display: flex; flex-shrink: 0;
+      animation: mq-left 32s linear infinite;
+      will-change: transform;
+    }
+    .marquee-track.rev { animation: mq-right 32s linear infinite; }
+    @keyframes mq-left {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes mq-right {
+      from { transform: translateX(-50%); }
+      to   { transform: translateX(0); }
+    }
+    .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+    .mq-item {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 12px; letter-spacing: 3.5px;
+      white-space: nowrap;
+      padding: 0 22px;
+      display: flex; align-items: center; gap: 22px;
+    }
+    .mq-r1 .mq-item { color: rgba(196,144,64,.45); }
+    .mq-r2 .mq-item { color: rgba(74,99,73,.65); }
+    .mq-dot {
+      width: 3px; height: 3px; border-radius: 50%; flex-shrink: 0;
+    }
+    .mq-r1 .mq-dot { background: var(--gold); opacity: .4; }
+    .mq-r2 .mq-dot { background: var(--moss); opacity: .55; }
+
     /* ── SLIDE DRAWER ─────────────────────────────── */
     .drawer-backdrop {
       position: fixed; inset: 0; z-index: 490;
@@ -955,6 +998,50 @@
       <img src="assets/photo.jpg" alt="Bạch Gia Huy – Alan" />
     </div>
   </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-row mq-r1">
+      <div class="marquee-track">
+        <span class="mq-item">CONTENT STRATEGY<span class="mq-dot"></span></span>
+        <span class="mq-item">SOCIAL MEDIA<span class="mq-dot"></span></span>
+        <span class="mq-item">META ADS<span class="mq-dot"></span></span>
+        <span class="mq-item">VIDEO PRODUCTION<span class="mq-dot"></span></span>
+        <span class="mq-item">TIKTOK ADS<span class="mq-dot"></span></span>
+        <span class="mq-item">WEBSITE ADMIN<span class="mq-dot"></span></span>
+        <span class="mq-item">COLLAB & KOL<span class="mq-dot"></span></span>
+        <span class="mq-item">SCRIPTWRITING<span class="mq-dot"></span></span>
+        <span class="mq-item">CONTENT STRATEGY<span class="mq-dot"></span></span>
+        <span class="mq-item">SOCIAL MEDIA<span class="mq-dot"></span></span>
+        <span class="mq-item">META ADS<span class="mq-dot"></span></span>
+        <span class="mq-item">VIDEO PRODUCTION<span class="mq-dot"></span></span>
+        <span class="mq-item">TIKTOK ADS<span class="mq-dot"></span></span>
+        <span class="mq-item">WEBSITE ADMIN<span class="mq-dot"></span></span>
+        <span class="mq-item">COLLAB & KOL<span class="mq-dot"></span></span>
+        <span class="mq-item">SCRIPTWRITING<span class="mq-dot"></span></span>
+      </div>
+    </div>
+    <div class="marquee-row mq-r2">
+      <div class="marquee-track rev">
+        <span class="mq-item">DIGITAL MARKETING<span class="mq-dot"></span></span>
+        <span class="mq-item">BLOVELAN<span class="mq-dot"></span></span>
+        <span class="mq-item">CONTENT PLAN<span class="mq-dot"></span></span>
+        <span class="mq-item">DOP<span class="mq-dot"></span></span>
+        <span class="mq-item">STRATEGIC THINKING<span class="mq-dot"></span></span>
+        <span class="mq-item">BRAND STORYTELLING<span class="mq-dot"></span></span>
+        <span class="mq-item">AI TOOLS<span class="mq-dot"></span></span>
+        <span class="mq-item">JUNIOR DIGITAL MARKETING<span class="mq-dot"></span></span>
+        <span class="mq-item">DIGITAL MARKETING<span class="mq-dot"></span></span>
+        <span class="mq-item">BLOVELAN<span class="mq-dot"></span></span>
+        <span class="mq-item">CONTENT PLAN<span class="mq-dot"></span></span>
+        <span class="mq-item">DOP<span class="mq-dot"></span></span>
+        <span class="mq-item">STRATEGIC THINKING<span class="mq-dot"></span></span>
+        <span class="mq-item">BRAND STORYTELLING<span class="mq-dot"></span></span>
+        <span class="mq-item">AI TOOLS<span class="mq-dot"></span></span>
+        <span class="mq-item">JUNIOR DIGITAL MARKETING<span class="mq-dot"></span></span>
+      </div>
+    </div>
+  </div>
 
   <!-- ABOUT -->
   <section id="about">
