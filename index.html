@@ -150,6 +150,8 @@
     /* right photo panel */
     .hero-r {
       width: 42%; position: relative; overflow: hidden; flex-shrink: 0;
+      will-change: transform;
+      transition: transform 0.18s ease-out;
     }
     .hero-r img {
       position: absolute; inset: 0; width: 100%; height: 100%;
@@ -206,6 +208,9 @@
       display: flex; flex-direction: column;
       justify-content: space-between;
       position: relative; z-index: 3;
+      transform-style: preserve-3d;
+      will-change: transform, filter;
+      transition: transform 0.14s ease-out, filter 0.14s ease-out;
     }
     .hero-eyebrow {
       display: flex; align-items: center; gap: 14px;
@@ -221,6 +226,11 @@
       line-height: 1.0; letter-spacing: -1px;
       font-weight: 600;
       color: var(--mist);
+      transform-style: preserve-3d;
+      will-change: transform, filter;
+      transition: transform 0.12s ease-out, filter 0.12s ease-out;
+      cursor: default;
+      display: inline-block;
     }
     .hero-name .alan-tag {
       display: block;
@@ -979,7 +989,7 @@
           <div class="hero-eline"></div>
           Junior Digital Marketing &nbsp;·&nbsp; BLOVELAN
         </div>
-        <div class="hero-name">
+        <div class="hero-name" id="heroName">
           Bạch Gia Huy<span class="alan-tag">— Alan</span>
         </div>
         <p class="hero-quote">
@@ -1590,6 +1600,29 @@
         }
       });
     });
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+      const heroL = heroSection.querySelector('.hero-l');
+      const heroR = heroSection.querySelector('.hero-r');
+      heroSection.addEventListener('mousemove', (e) => {
+        const rect = heroSection.getBoundingClientRect();
+        const dx = (e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
+        const dy = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
+        const rx = -dy * 14;
+        const ry =  dx * 14;
+        const blurPx = (Math.sqrt(rx * rx + ry * ry) / 20) * 3.5;
+        heroL.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        heroL.style.filter    = `blur(${blurPx.toFixed(2)}px)`;
+        if (heroR) {
+          heroR.style.transform = `translateX(${(-dx * 14).toFixed(1)}px) translateY(${(-dy * 10).toFixed(1)}px)`;
+        }
+      });
+      heroSection.addEventListener('mouseleave', () => {
+        heroL.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+        heroL.style.filter    = 'blur(0px)';
+        if (heroR) heroR.style.transform = 'translateX(0px) translateY(0px)';
+      });
+    }
   </script>
 </body>
 </html>
