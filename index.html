@@ -111,23 +111,26 @@
       padding: 28px 72px;
       display: flex; justify-content: space-between; align-items: center;
       transition: background .4s, padding .4s, border-color .4s;
+      background: transparent;
     }
     nav.stuck {
-      background: rgba(14,17,23,.93);
+      background: rgba(14,17,23,.82);
       backdrop-filter: blur(16px);
       padding: 16px 72px;
-      border-bottom: 1px solid rgba(196,144,64,.08);
+      border-bottom: 1px solid rgba(196,98,45,.12);
     }
     .nav-logo {
       font-family: "Bebas Neue", sans-serif;
       font-size: 18px; letter-spacing: 6px;
-      color: var(--gold); text-decoration: none;
+      color: #C4622D; text-decoration: none;
+      transition: color .2s;
     }
+    .nav-logo:hover { color: var(--gold); }
     .nav-links { display: flex; gap: 40px; list-style: none; }
     .nav-links a {
       font-size: 10px; font-weight: 600; letter-spacing: 2.5px;
       text-transform: uppercase;
-      color: rgba(240,235,225,.4); text-decoration: none;
+      color: #C4622D; text-decoration: none;
       transition: color .2s;
     }
     .nav-links a:hover { color: var(--gold); }
@@ -150,8 +153,6 @@
     /* right photo panel */
     .hero-r {
       width: 42%; position: relative; overflow: hidden; flex-shrink: 0;
-      will-change: transform;
-      transition: transform 0.18s ease-out;
     }
     .hero-r img {
       position: absolute; inset: 0; width: 100%; height: 100%;
@@ -208,9 +209,6 @@
       display: flex; flex-direction: column;
       justify-content: space-between;
       position: relative; z-index: 3;
-      transform-style: preserve-3d;
-      will-change: transform, filter;
-      transition: transform 0.14s ease-out, filter 0.14s ease-out;
     }
     .hero-eyebrow {
       display: flex; align-items: center; gap: 14px;
@@ -1600,27 +1598,24 @@
         }
       });
     });
-    const heroSection = document.getElementById('hero');
-    if (heroSection) {
-      const heroL = heroSection.querySelector('.hero-l');
-      const heroR = heroSection.querySelector('.hero-r');
-      heroSection.addEventListener('mousemove', (e) => {
-        const rect = heroSection.getBoundingClientRect();
-        const dx = (e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
-        const dy = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
-        const rx = -dy * 14;
-        const ry =  dx * 14;
-        const blurPx = (Math.sqrt(rx * rx + ry * ry) / 20) * 3.5;
-        heroL.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-        heroL.style.filter    = `blur(${blurPx.toFixed(2)}px)`;
-        if (heroR) {
-          heroR.style.transform = `translateX(${(-dx * 14).toFixed(1)}px) translateY(${(-dy * 10).toFixed(1)}px)`;
-        }
+    const heroName = document.getElementById('heroName');
+    if (heroName) {
+      heroName.addEventListener('mousemove', (e) => {
+        const rect = heroName.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+        const rx = (-dy / (rect.height / 2)) * 20;
+        const ry = (dx  / (rect.width  / 2)) * 20;
+        const tiltMag = Math.sqrt(rx * rx + ry * ry);
+        const blurPx  = (tiltMag / 28) * 4;
+        heroName.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        heroName.style.filter    = `blur(${blurPx.toFixed(2)}px)`;
       });
-      heroSection.addEventListener('mouseleave', () => {
-        heroL.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
-        heroL.style.filter    = 'blur(0px)';
-        if (heroR) heroR.style.transform = 'translateX(0px) translateY(0px)';
+      heroName.addEventListener('mouseleave', () => {
+        heroName.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg)';
+        heroName.style.filter    = 'blur(0px)';
       });
     }
   </script>
